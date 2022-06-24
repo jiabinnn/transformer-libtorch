@@ -156,8 +156,8 @@ class Corpus(object):
         raw_text = self.read_data_file(self.data_file)
         text = self.preprocess(raw_text)
         source, target = self.tokenize(text, num_examples)    
-        source_vocab = Vocab(source, min_freq=2, reserved_tokens=['<pad>', '<bos>', '<eos>'])
-        target_vocab = Vocab(target, min_freq=2, reserved_tokens=['<pad>', '<bos>', '<eos>'])
+        source_vocab = Vocab(source, min_freq=2, reserved_tokens=['<pad>', '<bos>', '<eos>'], savepath='data/fra-eng/source_vocab')
+        target_vocab = Vocab(target, min_freq=2, reserved_tokens=['<pad>', '<bos>', '<eos>'], savepath='data/fra-eng/target_vocab')
         source_array, source_valid_len = self.build_array(source, source_vocab, num_steps)
         target_array, target_valid_len = self.build_array(target, target_vocab, num_steps)
         data_arrays = (source_array, source_valid_len, target_array, target_valid_len)
@@ -174,7 +174,7 @@ if __name__ == '__main__':
     # print(len(source), len(target))
 
     corpus = Corpus('data/fra-eng/fra.txt')
-    train_iter, source_vocab, target_vocab = corpus.get_dataset(batch_size=2, num_steps=16, num_examples=None)
+    train_iter, source_vocab, target_vocab = corpus.get_dataset(batch_size=2, num_steps=10, num_examples=600, shuffle=False)
     # for x, x_len, y, y_len in train_iter:
     #     print(x, source_vocab.to_token(list(x[0])))
     #     print(x_len)

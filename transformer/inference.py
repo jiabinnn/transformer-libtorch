@@ -49,7 +49,7 @@ if __name__ == '__main__':
     next_tokens = start_tokens
     pred_tokens = []
     
-    sentence = 'i tell busy !'
+    sentence = 'i am busy .'
     enc_tokens, dec_tokens = process(sentence)
     idx = 0
     

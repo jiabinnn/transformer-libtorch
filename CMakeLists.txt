@@ -4,6 +4,10 @@ cmake_minimum_required(VERSION 3.0)
 # 定义工程名称
 project(TRANSFORMER_LIBTORCH)
 
+set(CMAKE_PREFIX_PATH "/home/tars/libtorch/libtorch_gpu")
+find_package(Torch REQUIRED)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+
 set(INCLUDE ${CMAKE_SOURCE_DIR}/include)
 
 file(GLOB SRC src/*.cc)
@@ -24,3 +28,6 @@ set(CMAKE_BUILD_TYPE Debug)
 # 生成可执行文件
 add_executable(debug tools/debug.cc ${SRC})
 add_executable(main tools/main.cc ${SRC})
+
+target_link_libraries(main "${TORCH_LIBRARIES}")
+target_link_libraries(debug "${TORCH_LIBRARIES}")

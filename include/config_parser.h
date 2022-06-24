@@ -12,10 +12,18 @@ public:
     ConfigParser(const std::string& pathname);
     Section getSection(const std::string& sectionName) const
     {
+        if (mSections.find(sectionName) == mSections.end())
+        {
+            return std::map<std::string, std::string>();
+        }
         return mSections.at(sectionName);
     }
     std::string get(const std::string& sectionName, const std::string& key) const
-    {
+    {   if (mSections.find(sectionName) == mSections.end() or 
+            mSections.at(sectionName).find(key) == mSections.at(sectionName).end())
+        {
+            return "";
+        }
         return mSections.at(sectionName).at(key);
     }
     std::vector<std::string> getSections() const;

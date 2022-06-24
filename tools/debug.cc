@@ -2,6 +2,7 @@
 #include "config_parser.h"
 #include "string_utils.h"
 #include "vocab.h"
+#include "transformer.h"
 
 #include <vector>
 #include <iostream>
@@ -30,9 +31,15 @@ int main(int argc, char* argv[])
     Vocab src_vocab(source_vocab_path);
     Vocab tgt_vocab(target_vocab_path);
 
-    for (int i = 0; i < 5; ++i) {
-        std::cout << src_vocab.get_token(i) << " ";
-    }
     std::cout << "size=" << src_vocab.get_vocab_size() << std::endl;
+    
+    std::string model_path = parser.get("save", "model_trace_path");
+    std::string device = parser.get("trainer", "device");
+    int max_len = atoi(parser.get("trainer", "max_len").c_str());
+
+    Transformer* model = new Transformer(model_path, max_len, device, &src_vocab, &tgt_vocab);
+    
+    model->inference("i am busy .");
+    
     return 0;
 }
