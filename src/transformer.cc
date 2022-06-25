@@ -35,14 +35,15 @@ torch::Tensor Transformer::get_attn_self_mask(const torch::Tensor& seq_q, \
     int seq_q_len = seq_q.size(1);
     int seq_k_len = seq_k.size(1);
     torch::Tensor mask = seq_k.eq(pad_idx).unsqueeze(1).expand({batch_size, seq_q_len, seq_k_len});
-    return mask.to(_device);
+    
+    return mask.to(torch::kBool).to(_device);
 }
 torch::Tensor Transformer::get_attn_subsequent_mask(const torch::Tensor& seq) {
     int batch_size = seq.size(0);
     int seq_len = seq.size(1);
     torch::Tensor subsequent_mask = torch::triu(torch::ones({seq_len, seq_len}, torch::kInt32), 1);
     subsequent_mask = subsequent_mask.unsqueeze(0).expand({batch_size, -1, -1});
-    return subsequent_mask.to(_device);
+    return subsequent_mask.to(torch::kBool).to(_device);
 }
 
 std::string Transformer::preprocess(const std::string& sentence) {
