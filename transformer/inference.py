@@ -40,7 +40,7 @@ if __name__ == '__main__':
     
     
     corpus = data_utils.Corpus(train_data_path)
-    train_iter, source_vocab, target_vocab = corpus.get_dataset(batch_size=batch_size, num_steps=max_len, num_examples=600, shuffle=False)
+    train_iter, source_vocab, target_vocab = corpus.get_dataset(batch_size=batch_size, num_steps=max_len, num_examples=None, shuffle=False)
     source_vocab_size = len(source_vocab)
     target_vocab_size = len(target_vocab)
     
