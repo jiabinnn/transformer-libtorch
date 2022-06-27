@@ -1,7 +1,7 @@
 # transformer-libtorch
 
 a simple example for torch transformer english to french translate.  
-try implement inference in linux c++ environment.
+implement inference function in linux c++ environment.
 
 ## env
 
