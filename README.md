@@ -28,3 +28,10 @@ change configs in config/config.ini if you want
    - you should firstly change your libtorch path in CMakeLists.txt, `set(CMAKE_PREFIX_PATH "/home/tars/libtorch/libtorch_gpu")`.
    - `mkdir build && cd build && cmake .. && make`, you get the bin file in `path_to_your_workspace/bin`
    - `cd/path_to_your_workspace` and run `./bin/main`,input english sentence, press enter to inference, press q to quit.
+
+
+## bugs
+tensor.data may cause unexpected results in traced model.
+for example: https://github.com/jiabinnn/transformer-libtorch/blob/297b0ed78b16da711cf9fd79cf11d2049579d991/transformer/model.py#L230
+this causes inference diff between `torch.save` model and `torch.jit.trace` model
+reference: https://pytorch.org/docs/stable/onnx.html#avoid-tensor-data
