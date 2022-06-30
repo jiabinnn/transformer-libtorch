@@ -32,8 +32,7 @@ change configs in config/config.ini if you want
 
 ## bugs
 
-tensor.data may cause unexpected results in traced model.  
-for example, avoid using tensor.data.  
+`tensor.data` may cause unexpected results in traced model.  
 https://github.com/jiabinnn/transformer-libtorch/blob/297b0ed78b16da711cf9fd79cf11d2049579d991/transformer/model.py#L230  
 this will cause inference diff between `torch.save` model and `torch.jit.trace` model.  
 reference: https://pytorch.org/docs/stable/onnx.html#avoid-tensor-data
