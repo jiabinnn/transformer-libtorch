@@ -215,7 +215,8 @@ class Transformer(nn.Module):
         dec_self_subsequent_attn_mask = self._attn_subsequent_mask(dec_inputs)
         dec_self_attn_mask = dec_self_attn_mask + dec_self_subsequent_attn_mask
         # 尽量不使用替换操作, 建议改为`dec_self_attn_mask = dec_self_attn_mask.gt(0)`
-        dec_self_attn_mask[:] = dec_self_attn_mask.gt(0)
+        # dec_self_attn_mask[:] = dec_self_attn_mask.gt(0)
+        dec_self_attn_mask = dec_self_attn_mask.gt(0)
         
         dec_enc_attn_mask = self._attn_pad_mask(dec_inputs, enc_inputs)
         decoder_outputs = self.decoder(dec_inputs, encoder_outputs, dec_self_attn_mask, dec_enc_attn_mask)
@@ -227,7 +228,8 @@ class Transformer(nn.Module):
         batch_size, len_k = seq_k.size()
         # `seq_k.data`会导致tracing之后的模型预测结果不符合预期，需要把`seq_k.data`改成`seq_k`
         # 参考https://pytorch.org/docs/stable/onnx.html#avoid-tensor-data
-        pad_mask = seq_k.data.eq(self.pad_idx).unsqueeze(1).expand(batch_size, len_q, len_k)
+        # pad_mask = seq_k.data.eq(self.pad_idx).unsqueeze(1).expand(batch_size, len_q, len_k)
+        pad_mask = seq_k.eq(self.pad_idx).unsqueeze(1).expand(batch_size, len_q, len_k)
         return pad_mask.to(seq_q.device) # [batch_size, len_q, len_k]
         
     def _attn_subsequent_mask(self, seq):
@@ -238,12 +240,12 @@ class Transformer(nn.Module):
         return subsequent_mask.to(seq.device)
     
 
-class Transformer_V2(nn.Module):
+class TransformerWithoutMask(nn.Module):
     def __init__(self, src_vocab, tgt_vocab, max_len, pad_idx,
                  query_size, key_size, value_size, 
                  num_hiddens, ffn_num_hiddens, 
                  num_heads, enc_layers, dec_layers, dropout, use_bias=False) -> None:
-        super(Transformer_V2, self).__init__()
+        super(TransformerWithoutMask, self).__init__()
         self.pad_idx = pad_idx
         self.encoder = Encoder(vocab_size=src_vocab,
                                max_len=max_len,

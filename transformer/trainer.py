@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import os
-from model import Transformer, Transformer_V2
+from model import Transformer, TransformerWithoutMask
 import data_utils
 from config import MyConfig
 
@@ -39,7 +39,7 @@ if __name__ == '__main__':
         os.mkdir(dirname)
 
     '''deal mask before transformer'''
-    model = Transformer_V2(src_vocab=source_vocab_size,
+    model = TransformerWithoutMask(src_vocab=source_vocab_size,
                         tgt_vocab=target_vocab_size,
                         max_len=max_len,
                         pad_idx=1,
@@ -103,12 +103,10 @@ if __name__ == '__main__':
             os.remove(model_entire_path)
         torch.save(model, model_entire_path)
 
-    # torch.save(model.state_dict(), model_stat_dict_path)
-    # torch.save(model, model_entire_path)
     
     
     
-    '''deal mask in transformer'''
+    # '''deal mask in transformer'''
     # model = Transformer(src_vocab=source_vocab_size,
     #                     tgt_vocab=target_vocab_size,
     #                     max_len=max_len,
@@ -129,7 +127,7 @@ if __name__ == '__main__':
     # print('target vocab size:', target_vocab_size)
     
     # criterion = nn.CrossEntropyLoss()
-    # optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
+    # optimizer = torch.optim.Adam(model.parameters(), lr=lr)
 
     # # print(*[(name, param.shape) for name, param in model.named_parameters()])
     
@@ -139,11 +137,12 @@ if __name__ == '__main__':
     #         y = y.to(device=device)
     #         bos = torch.tensor([target_vocab['<bos>']] * y.shape[0], device=device).reshape(-1, 1)
     #         dec_input = torch.cat([bos, y], dim=1)
+    #         dec_input = dec_input[:, :-1]
     #         # print(source_vocab.to_token(list(x[0])))
     #         # print(target_vocab.to_token(list(dec_input[0])))
     #         optimizer.zero_grad()
-    #         pred = model(x, dec_input[:, :-1])
-    #         loss = criterion(pred.permute(0, 2, 1), dec_input[:, 1:])
+    #         pred = model(x, dec_input)
+    #         loss = criterion(pred.permute(0, 2, 1), y)
     #         loss.backward()
     #         optimizer.step()
     #     print(source_vocab.to_token(list(x[0])))
@@ -152,5 +151,5 @@ if __name__ == '__main__':
     #     print(target_vocab.to_token(list(pred_result[0])))
     
     #     print('Epoch:', '%04d' % (epoch + 1), 'loss =', '{:.6f}'.format(loss))
-    # torch.save(model.state_dict(), 'saved_models/state_dict_model.pt')
-    # torch.save(model, 'saved_models/entire_model.pt')
+    #     # torch.save(model.state_dict(), 'saved_models/state_dict_model.pt')
+    #     torch.save(model, 'saved_models/temp.pt')

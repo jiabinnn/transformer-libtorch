@@ -65,6 +65,8 @@ if __name__ == '__main__':
         # sentence = 'i am busy .'
         if sentence == 'q':
             break
+        
+        # inference 1
         enc_tokens, dec_tokens = process(sentence)
         idx = 0
         next_tokens = start_tokens
@@ -96,6 +98,7 @@ if __name__ == '__main__':
         print('pred:', ' '.join(pred_tokens))
 
 
+        # inference 2
         enc_tokens, dec_tokens = process(sentence)
         next_tokens = start_tokens
         pred_tokens = []
@@ -126,3 +129,79 @@ if __name__ == '__main__':
         print(dec_logit)
         print('input:', ' '.join(enc_tokens))  
         print('pred:', ' '.join(pred_tokens))
+
+
+
+    ''' test '''
+    # # inference 1
+    # model_entire = torch.load('saved_models/temp.pt')
+    # # model_entire = torch.load(model_entire_path)
+    # model_entire = model_entire.to(device)
+    # model_entire.eval()
+    
+    # model_trace = torch.jit.load('saved_models/temp_trace.pt')
+    # # model_trace = torch.jit.load(model_trace_path)
+    # model_trace = model_trace.to(device)
+    # model_trace.eval()
+
+    # sentence = ''
+    # while True:
+    #     sentence = input('input:')
+    #     if sentence == 'q':
+    #         break
+    #     # sentence = 'i see .'
+    #     enc_tokens, dec_tokens = process(sentence)
+    #     next_tokens = start_tokens
+    #     pred_tokens = []
+    #     idx = 0
+
+    #     enc_inputs = torch.tensor(source_vocab[enc_tokens], dtype=torch.long, device=device).reshape((1, -1))
+    #     while next_tokens != end_tokens:
+    #         dec_tokens[idx] = next_tokens
+    #         dec_inputs = torch.tensor([target_vocab[dec_tokens]], dtype=torch.long, device=device).reshape((1, -1))
+            
+    #         dec_outputs = model_entire(enc_inputs, dec_inputs)
+    #         dec_logit = dec_outputs.squeeze(0)
+    #         dec_result = dec_logit.argmax(dim=-1)
+    #         next_idx = dec_result[idx]
+    #         next_tokens = target_vocab.to_token(next_idx)
+    #         pred_tokens.append(next_tokens)
+    #         idx += 1
+    #         if idx >= max_len:
+    #             break
+    #         # print(dec_outputs.shape)
+    #         # print(dec_logit.shape)
+    #         # print(dec_result.shape)
+    #         # print(source_vocab.to_token(list(enc_inputs[0])))
+    #         # print(target_vocab.to_token(list(dec_result)))
+    #     print(dec_logit)
+    #     print('input:', ' '.join(enc_tokens))  
+    #     print('pred:', ' '.join(pred_tokens))
+
+        
+    #     enc_tokens, dec_tokens = process(sentence)
+    #     next_tokens = start_tokens
+    #     pred_tokens = []
+    #     idx = 0
+        
+    #     enc_inputs = torch.tensor(source_vocab[enc_tokens], dtype=torch.long, device=device).reshape((1, -1))
+    #     while next_tokens != end_tokens:
+    #         dec_tokens[idx] = next_tokens
+    #         dec_inputs = torch.tensor([target_vocab[dec_tokens]], dtype=torch.long, device=device).reshape((1, -1))
+    #         dec_outputs = model_trace(enc_inputs, dec_inputs)
+    #         dec_logit = dec_outputs.squeeze(0)
+    #         dec_result = dec_logit.argmax(dim=-1)
+    #         next_idx = dec_result[idx]
+    #         next_tokens = target_vocab.to_token(next_idx)
+    #         pred_tokens.append(next_tokens)
+    #         idx += 1
+    #         if idx >= max_len:
+    #             break
+    #         # print(dec_outputs.shape)
+    #         # print(dec_logit.shape)
+    #         # print(dec_result.shape)
+    #         # print(source_vocab.to_token(list(enc_inputs[0])))
+    #         # print(target_vocab.to_token(list(dec_result)))
+    #     print(dec_logit)
+    #     print('input:', ' '.join(enc_tokens))  
+    #     print('pred:', ' '.join(pred_tokens))
