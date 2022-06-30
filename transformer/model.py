@@ -214,6 +214,7 @@ class Transformer(nn.Module):
         dec_self_attn_mask = self._attn_pad_mask(dec_inputs, dec_inputs)
         dec_self_subsequent_attn_mask = self._attn_subsequent_mask(dec_inputs)
         dec_self_attn_mask = dec_self_attn_mask + dec_self_subsequent_attn_mask
+        # 尽量不使用替换操作, 建议改为`dec_self_attn_mask = dec_self_attn_mask.gt(0)`
         dec_self_attn_mask[:] = dec_self_attn_mask.gt(0)
         
         dec_enc_attn_mask = self._attn_pad_mask(dec_inputs, enc_inputs)
@@ -224,6 +225,8 @@ class Transformer(nn.Module):
     def _attn_pad_mask(self, seq_q, seq_k):
         batch_size, len_q = seq_q.size()  # 这个seq_q只是用来expand维度的
         batch_size, len_k = seq_k.size()
+        # `seq_k.data`会导致tracing之后的模型预测结果不符合预期，需要把`seq_k.data`改成`seq_k`
+        # 参考https://pytorch.org/docs/stable/onnx.html#avoid-tensor-data
         pad_mask = seq_k.data.eq(self.pad_idx).unsqueeze(1).expand(batch_size, len_q, len_k)
         return pad_mask.to(seq_q.device) # [batch_size, len_q, len_k]
         
