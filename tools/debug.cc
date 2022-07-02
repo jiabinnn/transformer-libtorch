@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 
     std::cout << "size=" << src_vocab.get_vocab_size() << std::endl;
     
-    std::string model_path = parser.get("save", "model_trace_path");
+    std::string model_path = parser.get("save", "model1_trace_path");
     std::string device = parser.get("trainer", "device");
     int max_len = atoi(parser.get("trainer", "max_len").c_str());
 

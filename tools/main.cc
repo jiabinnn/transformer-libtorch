@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     std::string batch_size = parser.get("trainer", "batch_size");
     std::string source_vocab_path = parser.get("data", "source_vocab_path");
     std::string target_vocab_path = parser.get("data", "target_vocab_path");
-    std::string model_path = parser.get("save", "model_trace_path");
+    std::string model_path = parser.get("save", "model1_trace_path");
     std::string device = parser.get("trainer", "device");
     int max_len = atoi(parser.get("trainer", "max_len").c_str());
 

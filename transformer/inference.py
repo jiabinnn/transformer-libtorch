@@ -19,8 +19,8 @@ if __name__ == '__main__':
     config = MyConfig('config/config.ini')
     
     train_data_path = config.train_data_path
-    model_entire_path = config.model_entire_path
-    model_trace_path = config.model_trace_path
+    model1_entire_path = config.model1_entire_path
+    model1_trace_path = config.model1_trace_path
     
     batch_size = config.batch_size
     max_len = config.max_len
@@ -48,14 +48,14 @@ if __name__ == '__main__':
     end_tokens = '<eos>'
     
     # inference 1
-    print(f'loading {model_entire_path}')
-    model_entire = torch.load(model_entire_path)
+    print(f'loading {model1_entire_path}')
+    model_entire = torch.load(model1_entire_path)
     model_entire = model_entire.to(device)
     model_entire.eval()
 
     # inference 2
-    print(f'loading {model_trace_path}')
-    model_trace = torch.jit.load(model_trace_path)
+    print(f'loading {model1_trace_path}')
+    model_trace = torch.jit.load(model1_trace_path)
     model_trace = model_trace.to(device)
     model_trace.eval()
     
@@ -135,12 +135,12 @@ if __name__ == '__main__':
     ''' test '''
     # # inference 1
     # model_entire = torch.load('saved_models/temp.pt')
-    # # model_entire = torch.load(model_entire_path)
+    # # model_entire = torch.load(model1_entire_path)
     # model_entire = model_entire.to(device)
     # model_entire.eval()
     
     # model_trace = torch.jit.load('saved_models/temp_trace.pt')
-    # # model_trace = torch.jit.load(model_trace_path)
+    # # model_trace = torch.jit.load(model1_trace_path)
     # model_trace = model_trace.to(device)
     # model_trace.eval()
 
