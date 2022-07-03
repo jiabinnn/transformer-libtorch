@@ -40,4 +40,4 @@ reference: https://pytorch.org/docs/stable/onnx.html#avoid-tensor-data
 
 onnx-tensorrt does not support torch.triu.  
 
-cp ${tensorrt_dir}/lib/libnvinfer_builder_resource.so.8.4.1 ${workspaceFolder}
+`cp ${tensorrt_dir}/lib/libnvinfer_builder_resource.so.8.4.1 ${workspaceFolder}`
