@@ -9,6 +9,13 @@ import os
 from config import MyConfig
 
 def process(sentence):
+    def no_space(char, prev_char):
+        return char in set(',.!?') and prev_char != ' '
+    
+    out = [' ' + char if i > 0 and no_space(char, sentence[i - 1]) else char
+        for i, char in enumerate(sentence)]
+    
+    sentence =  ''.join(out)
     tokens = sentence.split(' ') + ['<eos>']
     enc_tokens = tokens + ['<pad>'] * (max_len - len(tokens))            
     dec_tokens = [start_tokens] + ['<pad>'] * (max_len - 1)
@@ -40,7 +47,7 @@ if __name__ == '__main__':
     
     
     corpus = data_utils.Corpus(train_data_path)
-    train_iter, source_vocab, target_vocab = corpus.get_dataset(batch_size=batch_size, num_steps=max_len, num_examples=None, shuffle=False)
+    train_iter, source_vocab, target_vocab = corpus.get_dataset(batch_size=batch_size, num_steps=max_len, num_examples=100, shuffle=False)
     source_vocab_size = len(source_vocab)
     target_vocab_size = len(target_vocab)
     

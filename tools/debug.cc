@@ -2,7 +2,7 @@
 #include "config_parser.h"
 #include "string_utils.h"
 #include "vocab.h"
-#include "transformer.h"
+#include "model_libtorch.h"
 
 #include <vector>
 #include <iostream>
