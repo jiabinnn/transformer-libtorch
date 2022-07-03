@@ -38,4 +38,6 @@ https://github.com/jiabinnn/transformer-libtorch/blob/297b0ed78b16da711cf9fd79cf
 this will cause inference diff between `torch.save` model and `torch.jit.trace` model.  
 reference: https://pytorch.org/docs/stable/onnx.html#avoid-tensor-data  
 
-onnx-tensorrt does not support torch.triu
+onnx-tensorrt does not support torch.triu.  
+
+cp ${tensorrt_dir}/lib/libnvinfer_builder_resource.so.8.4.1 ${workspaceFolder}
