@@ -235,7 +235,7 @@ class Transformer(nn.Module):
     def _attn_subsequent_mask(self, seq):
         batch_size, len_seq = seq.size()
         # 生成一个上三角矩阵
-        subsequent_mask = torch.triu(torch.ones((len_seq, len_seq), dtype=torch.uint8), diagonal=1)
+        subsequent_mask = torch.triu(torch.ones((len_seq, len_seq), dtype=torch.int32), diagonal=1)
         subsequent_mask = subsequent_mask.unsqueeze(0).expand(batch_size, -1, -1)
         return subsequent_mask.to(seq.device)
     

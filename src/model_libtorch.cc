@@ -123,7 +123,9 @@ std::string Transformer::inference(const std::string& sentence) {
         torch::Tensor dec_subsquence_mask = get_attn_subsequent_mask(dec_ids_tensor);
         dec_self_mask = dec_self_mask & dec_subsquence_mask;
         torch::Tensor dec_enc_mask = get_attn_self_mask(dec_ids_tensor, enc_ids_tensor, pad_idx);
-        torch::Tensor output = _model.forward({enc_ids_tensor, dec_ids_tensor, enc_self_mask, dec_self_mask, dec_enc_mask}).toTensor();
+        // torch::Tensor output = _model.forward({enc_ids_tensor, dec_ids_tensor, enc_self_mask, dec_self_mask, dec_enc_mask}).toTensor();
+        // model inputs do not need masks
+        torch::Tensor output = _model.forward({enc_ids_tensor, dec_ids_tensor}).toTensor();
         output = output.squeeze(0);
         output = output.argmax(-1);
         int next_id = output[i].item().toInt();

@@ -13,7 +13,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS} -Wall")
 
 find_package(CUDA REQUIRED)
 
-set(TENSORRT_DIR "/home/tars/TensorRT-8.4.1.5")
+set(TENSORRT_DIR "/home/tars/Documents/tensorrt/trt8.4/TensorRT-8.4.1.5")
+# set(TENSORRT_DIR "/home/tars/Documents/tensorrt/TensorRT-8.5.3.1")
 set(CUDA_TOOLKIT_DIR "/usr/local/cuda")
 
 set(COMMONSRC src/config_parser.cc src/string_utils.cc src/vocab.cc)

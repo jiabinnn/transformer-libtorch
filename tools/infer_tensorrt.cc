@@ -22,8 +22,8 @@ int main() {
     std::string source_vocab_path = parser.get("data", "source_vocab_path");
     std::string target_vocab_path = parser.get("data", "target_vocab_path");
     std::string device = parser.get("trainer", "device");
-    std::string model1_onnx_path = parser.get("save", "model1_onnx_path");
-    std::string model1_engine_path = parser.get("save", "model1_engine_path");
+    std::string model1_onnx_path = parser.get("save", "model2_onnx_path");
+    std::string model1_engine_path = parser.get("save", "model2_engine_path");
     int max_len = atoi(parser.get("trainer", "max_len").c_str());
 
     std::unique_ptr<Vocab> src_vocab(new Vocab(source_vocab_path));
@@ -32,8 +32,8 @@ int main() {
     std::cout << "batch_size=" << batch_size << std::endl;
     std::cout << "source_vocab_path=" << source_vocab_path << std::endl;
     std::cout << "target_vocab_path=" << target_vocab_path << std::endl;
-    std::cout << "model2_onnx_path=" << model1_onnx_path << std::endl;
-    std::cout << "model2_engine_path=" << model1_engine_path << std::endl;
+    std::cout << "model_onnx_path=" << model1_onnx_path << std::endl;
+    std::cout << "model_engine_path=" << model1_engine_path << std::endl;
     std::cout << "device=" << device << std::endl;
     std::cout << "max_len=" << max_len << std::endl;
     

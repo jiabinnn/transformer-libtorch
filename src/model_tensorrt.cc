@@ -343,9 +343,9 @@ std::string Engine::inference(const std::string& sentence) {
         std::vector<void*> prediction_bindings = {
             enc_ids_buff.deviceBuffer.data(),
             dec_ids_buff.deviceBuffer.data(),
-            enc_self_mask_buff.deviceBuffer.data(),
-            dec_self_mask_buff.deviceBuffer.data(),
-            enc_dec_mask_buff.deviceBuffer.data(),
+            // enc_self_mask_buff.deviceBuffer.data(),
+            // dec_self_mask_buff.deviceBuffer.data(),
+            // enc_dec_mask_buff.deviceBuffer.data(),
             output_buff.deviceBuffer.data()
         };
         bool status = _context->enqueueV2(prediction_bindings.data(), _stream, nullptr);
